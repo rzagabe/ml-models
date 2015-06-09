@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+package ml.data;
+
+// An instance corresponds to a target with one or more features.
+// Next id: 3
+message Instance {
+  optional float target = 1;
+  repeated float inputs = 2;
+}
+
+// A collection of instances.
+// Next id: 2
+message DataMessage {
+  repeated Instance instances = 1;
+}

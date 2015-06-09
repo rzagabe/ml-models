@@ -1,0 +1,40 @@
+syntax = "proto2";
+
+package ml.optimizer;
+
+// Information about loss functions and their hyperparameters.
+// Next id: 3
+message LossParameters {
+  // Identifier of the actual loss function to minimize:
+  // Supported loss functions:
+  //    - "SquaredLoss":
+  //    - "RidgeLoss":
+  //    - "LassoLoss":
+  //
+  optional string name = 1 [default = "SquaredLoss"];
+  
+  // L1 regularization.
+  optional double l1_regularization = 2 [default = 0.0];
+  
+  // L2 regularization.
+  optional double l2_regularization = 3 [default = 0.0];
+}
+
+// This message defines a large part of the optimizers extra parameters.
+// Next id: 5
+message OptimizationParameters {
+  // Identifier of the optimization method used to minimize the objective function.
+  // Supported methods:
+  //    - "GradientDescent":
+  //    - "StochasticGradientDescent":
+  //
+  optional string name = 1 [default = "GradientDescent"];
+
+  // Mini-batch size. (for stochastic methods only)
+  optional int64 batch_size = 2 [default = 1];
+  
+  // Loss function settings.
+  optional LossParameters loss_parameters = 3;
+
+  extensions 100 to max;
+}

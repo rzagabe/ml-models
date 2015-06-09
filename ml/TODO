@@ -1,0 +1,6 @@
+TODO(zagabe.lu@gmail.com):
+        - Support l1 regularization for LinearRegression.
+        - Naive Bayes classifier model.
+        - Optimizers implementation:
+                - Newton's / Quasi-Newton's methods
+                - Coordinate descent method

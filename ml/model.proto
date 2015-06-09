@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+package ml;
+
+// Information about models parameters.
+// Next id: 3
+message ModelParameters {
+  // Name of the model.
+  optional string name = 1;
+
+  enum ModelType {
+    CLASSIFICATION = 0;
+    REGRESSION = 1;
+  }
+
+  optional ModelType type = 2 [default = REGRESSION];
+
+  extensions 100 to max;
+}

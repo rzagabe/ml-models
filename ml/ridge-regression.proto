@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+package ml;
+
+import "ml/model.proto";
+
+// Ridge regression model parameters.
+// Next id: 2
+message RidgeRegressionParameters {
+  // L2 regularization.
+  optional double l2_reg = 1 [default = 0.0001];
+
+  // Regression coefficients.
+  repeated double parameters = 2;
+
+  extend ModelParameters {
+    optional RidgeRegressionParameters options = 102;
+  }
+}
