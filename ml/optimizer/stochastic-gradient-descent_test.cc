@@ -65,6 +65,6 @@ TEST(StochasticGradientDescent, SquaredLossMiniBatchOptimization) {
   optimizer.set_batch_size(4);
   optimizer.Optimize(x, y, 0, 100, 0.0001, 0.001, &w);
   
-  EXPECT_LT(optimizer.cached_iterations(), 50);
+  EXPECT_LT(optimizer.cached_iterations(), 60);
   EXPECT_LT(optimizer.cached_cost(), 0.0001);
 }

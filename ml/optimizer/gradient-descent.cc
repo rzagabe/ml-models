@@ -29,7 +29,7 @@ bool GradientDescent::Optimize(const Matrix& x, const Vector& y, int min_iter,
     CHECK(loss_->eval_gradient_f(x, y, *w, &grad_f));
 
     LOG(INFO) << "iteration = " << k + 1 << ", cost = " << cost;
-    if (std::abs(cost) < eps) {
+    if (std::sqrt(grad_f.dot(grad_f)) < eps) {
       LOG(INFO) << "Stopping criterion attained (" << k + 1 << " iterations)";
       cached_iterations_ = k + 1;
       cached_cost_ = cost;

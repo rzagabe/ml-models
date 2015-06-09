@@ -47,7 +47,7 @@ bool StochasticGradientDescent::Optimize(const Matrix& x, const Vector& y,
     cached_cost_ = cost;
 
     LOG(INFO) << "iteration = " << k + 1 << ", cost = " << cost;
-    if (std::abs(cost) < eps) {
+    if (std::sqrt(cached_grad_f_.dot(cached_grad_f_)) < eps) {
       // TODO(zagabe.lu@gmail.com): Should the stopping criterion only
       // be tested against the minibatch used to compute the gradient?
       LOG(INFO) << "Stopping criterion attained (" << k + 1 << " iterations)";
