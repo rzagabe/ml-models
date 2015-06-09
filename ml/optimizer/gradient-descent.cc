@@ -36,6 +36,8 @@ bool GradientDescent::Optimize(const Matrix& x, const Vector& y, int min_iter,
       break;
     }
 
+    // TODO(zagabe.lu@gmail.com): Execute a backtracking line search
+    // algorithm.
     *w = *w - gamma * grad_f;
     CHECK(loss_->intermediate_callback(x, y, k + 1, min_iter, max_iter, eps,
                                        &gamma, w));

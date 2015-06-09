@@ -1,5 +1,4 @@
 // Author: zagabe.lu@gmail.com (Lucien R. Zagabe)
-//
 
 #include "ml/optimizer/stochastic-gradient-descent.h"
 
@@ -54,6 +53,8 @@ bool StochasticGradientDescent::Optimize(const Matrix& x, const Vector& y,
       break;
     }
 
+    // TODO(zagabe.lu@gmail.com): Execute a backtracking line search
+    // algorithm.
     *w = *w - gamma * cached_grad_f_;
     CHECK(loss_->intermediate_callback(x, y, k + 1, min_iter, max_iter, eps,
                                        &gamma, w));
