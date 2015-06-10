@@ -17,7 +17,8 @@ message LinearRegressionParameters {
   // Stopping criterions.
   optional double eps = 3 [default = 0.0001];
 
-  // Learning rate (step length fixed).
+  // Learning rate (fixed step length; ignored if the backtracking line search
+  // is enabled).
   optional double gamma = 4 [default = 0.0001];
 
   // Regression coefficients.
