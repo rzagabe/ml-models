@@ -33,14 +33,14 @@ message OptimizationParameters {
   // Mini-batch size. (for stochastic methods only)
   optional int64 batch_size = 2 [default = 1];
 
-  // Choose step size via backtracking line search.
-  optional bool backtracking_line_search = 3 [default = false];
+  // If true, choose step sizes via backtracking line search.
+  optional bool bt_line_search = 3 [default = false];
 
   // Backtracking line search constant. (0 <= alpha <= 0.5)
-  optional double backtracking_line_search_alpha = 4 [default = 0.3];
+  optional double bt_line_search_alpha = 4 [default = 0.3];
 
   // Backtracking line search constant. (0 <= beta <= 1)
-  optional double backtracking_line_search_beta = 5 [default = 0.8];
+  optional double bt_line_search_beta = 5 [default = 0.8];
 
   // Loss function settings.
   optional LossParameters loss_parameters = 6;

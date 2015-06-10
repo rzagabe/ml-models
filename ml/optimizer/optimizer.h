@@ -33,9 +33,9 @@ class Optimizer : public FactoryBase {
   virtual bool Initialize(const ::google::protobuf::Message& message) {
     const OptimizationParameters& options =
         dynamic_cast<const OptimizationParameters&>(message);
-    bt_line_search_ = options.backtracking_line_search();
-    bt_line_search_alpha_ = options.backtracking_line_search_alpha();
-    bt_line_search_beta_ = options.backtracking_line_search_beta();
+    bt_line_search_ = options.bt_line_search();
+    bt_line_search_alpha_ = options.bt_line_search_alpha();
+    bt_line_search_beta_ = options.bt_line_search_beta();
   }
 
   virtual bool Optimize(const Matrix& x, const Vector& y, int min_iter,
