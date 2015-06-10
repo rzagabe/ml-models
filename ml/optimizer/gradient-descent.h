@@ -35,6 +35,9 @@ class GradientDescent : public Optimizer {
     const LossParameters& loss_parameters = options.loss_parameters();
     delete loss_;
     loss_ = Factory<LossFunction>::CreateOrDie(loss_name, loss_parameters);
+    bt_line_search_ = options.backtracking_line_search();
+    bt_line_search_alpha_ = options.backtracking_line_search_alpha();
+    bt_line_search_beta_ = options.backtracking_line_search_beta();
     return true;
   }
 

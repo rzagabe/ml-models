@@ -52,6 +52,7 @@ cc_library(
         ":loss-function",
         ":optimizer",
         ":squared-loss",
+        ":line-search",
         "//external:eigen",
         "//external:glog",
         "//external:gtest",
@@ -82,6 +83,7 @@ cc_library(
         ":squared-loss",
         ":ridge-loss",
         ":optimizer",
+        ":line-search",
         "//external:eigen",
         "//external:glog",
         "//external:gtest",
@@ -150,4 +152,14 @@ cc_test(
         "//external:gtest_main",
     ],
     size = "small",
+)
+
+cc_library(
+    name = "line-search",
+    srcs = ["line-search.cc"],
+    hdrs = ["line-search.h"],
+    deps = [
+        ":loss-function",
+        "//external:eigen",
+    ],
 )

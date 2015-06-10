@@ -23,12 +23,48 @@ class Optimizer : public FactoryBase {
   typedef Eigen::VectorXf Vector;
   typedef Eigen::MatrixXf Matrix;
 
-  Optimizer() {}
+  Optimizer()
+      : bt_line_search_(false),
+        bt_line_search_alpha_(0.3),
+        bt_line_search_beta_(0.8) {}
 
   virtual ~Optimizer() {}
 
+  virtual bool Initialize(const ::google::protobuf::Message& message) {
+    const OptimizationParameters& options =
+        dynamic_cast<const OptimizationParameters&>(message);
+    bt_line_search_ = options.backtracking_line_search();
+    bt_line_search_alpha_ = options.backtracking_line_search_alpha();
+    bt_line_search_beta_ = options.backtracking_line_search_beta();
+  }
+
   virtual bool Optimize(const Matrix& x, const Vector& y, int min_iter,
                         int max_iter, double eps, double gamma, Vector* w) = 0;
+
+  bool bt_line_search() { return bt_line_search_; }
+  void set_bt_line_search(bool bt_line_search) {
+    bt_line_search_ = bt_line_search;
+  }
+
+  bool bt_line_search_alpha() { return bt_line_search_alpha_; }
+  void set_bt_line_search_alpha(double bt_line_search_alpha) {
+    bt_line_search_alpha_ = bt_line_search_alpha;
+  }
+
+  bool bt_line_search_beta() { return bt_line_search_beta_; }
+  void set_bt_line_search_beta(double bt_line_search_beta) {
+    bt_line_search_beta_ = bt_line_search_beta;
+  }
+
+ protected:
+  // If true, choose step size via backtracking line search.
+  bool bt_line_search_;
+
+  // Backtracking line search constant. (0 <= alpha <= 0.5)
+  double bt_line_search_alpha_;
+
+  // Backtracking line search constant. (0 <= beta <= 1)
+  double bt_line_search_beta_;
 };
 
 #define REGISTER_OPTIMIZER(TYPE) REGISTER_CONCRETE(TYPE, TYPE, Optimizer)
