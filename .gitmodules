@@ -7,3 +7,6 @@
 [submodule "third_party/eigen/repository"]
 	path = third_party/eigen/repository
 	url = git@github.com:RLovelett/eigen.git
+[submodule "third_party/protobuf/repository"]
+	path = third_party/protobuf/repository
+	url = git@github.com:google/protobuf.git
