@@ -31,7 +31,7 @@ cc_library(
     ],
     deps = [
         ":gtest",
-        "//external:glog",
-        "//external:gflags"
+        "//third_party/glog",
+        "//third_party/gflags",
     ],
 )

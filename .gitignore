@@ -4,3 +4,5 @@
 /bazel-base_workspace
 /bazel-testlogs
 /bazel-ml
+/bazel-bazel-default
+/bazel-bazel-workspace

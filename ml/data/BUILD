@@ -21,10 +21,10 @@ cc_library(
     hdrs = ["data.h"],
     deps = [
         ":data_proto",
-        "//external:proto_lib",
-        "//external:eigen",
-        "//external:gtest",
-        "//external:glog",
+        "//third_party/protobuf:proto_lib",
+        "//third_party/eigen",
+        "//third_party/gtest",
+        "//third_party/glog",
     ],
     visibility = ["//visibility:public"],
 )
@@ -36,9 +36,9 @@ cc_library(
     deps = [
         ":data",
         ":data_proto",
-        "//external:eigen",
-        "//external:gtest",
-        "//external:glog",
+        "//third_party/eigen",
+        "//third_party/gtest",
+        "//third_party/glog",
     ],
 )
 
@@ -50,8 +50,8 @@ cc_test(
         ":data_proto",
         ":data-builder",
         ":data-writer",
-        "//external:gtest_main",
-        "//external:glog",
+        "//third_party/gtest:gtest_main",
+        "//third_party/glog",
     ],
     size = "small",
 )
@@ -63,9 +63,9 @@ cc_library(
     deps = [
         ":data",
         ":data_proto",
-        "//external:eigen",
-        "//external:gtest",
-        "//external:glog",
+        "//third_party/eigen",
+        "//third_party/gtest",
+        "//third_party/glog",
     ],
 )
 
@@ -76,9 +76,9 @@ cc_test(
         ":data",
         ":data_proto",
         ":data-reader",
-        "//external:proto_lib",
-        "//external:glog",
-        "//external:gtest_main",
+        "//third_party/protobuf:proto_lib",
+        "//third_party/glog",
+        "//third_party/gtest:gtest_main",
     ],
     size = "small",
 )
@@ -89,7 +89,7 @@ cc_library(
     hdrs = ["data-builder.h"],
     deps = [
         ":data",
-        "//external:gtest",
+        "//third_party/gtest",
     ],
     visibility = ["//visibility:public"],
 )
@@ -100,8 +100,8 @@ cc_test(
     deps = [
         ":data",
         ":data-builder",
-        "//external:glog",
-        "//external:gtest_main",
+        "//third_party/glog",
+        "//third_party/gtest:gtest_main",
     ],
     size = "small",
 )
@@ -112,8 +112,8 @@ cc_library(
     hdrs = ["libsvm-reader.h"],
     deps = [
         ":data-builder",
-        "//external:gtest",
-        "//external:glog",
+        "//third_party/gtest",
+        "//third_party/glog",
     ],
     visibility = ["//visibility:public"],
 )
@@ -125,9 +125,9 @@ cc_test(
         ":data",
         ":data-builder",
         ":libsvm-reader",
-        "//external:glog",
-        "//external:eigen",
-        "//external:gtest_main",
+        "//third_party/glog",
+        "//third_party/eigen",
+        "//third_party/gtest:gtest_main",
     ],
     data = [
         "//ml/data/testdata:simple.libsvm",

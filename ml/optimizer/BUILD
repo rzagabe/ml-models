@@ -25,7 +25,7 @@ cc_library(
     hdrs = ["loss-function.h"],
     deps = [
         "//ml:factory",
-        "//external:eigen",
+        "//third_party/eigen",
     ],
     visibility = ["//visibility:public"],
 )
@@ -38,8 +38,8 @@ cc_library(
         ":loss-function",
         ":optimizer_proto",
         "//ml:factory",
-        "//external:glog",
-        "//external:eigen",
+        "//third_party/glog",
+        "//third_party/eigen",
     ],
     visibility = ["//visibility:public"],
 )
@@ -53,9 +53,9 @@ cc_library(
         ":optimizer",
         ":squared-loss",
         ":line-search",
-        "//external:eigen",
-        "//external:glog",
-        "//external:gtest",
+        "//third_party/eigen",
+        "//third_party/glog",
+        "//third_party/gtest",
     ],
     visibility = ["//visibility:public"],
 )
@@ -67,10 +67,10 @@ cc_test(
         ":optimizer",
         ":optimizer_proto",
         ":gradient-descent",
-        "//external:glog",
-        "//external:proto_lib",
-        "//external:gtest_main",
         "//ml:factory",
+        "//third_party/glog",
+        "//third_party/protobuf:proto_lib",
+        "//third_party/gtest:gtest_main",
     ],
     size = "small",
 )
@@ -84,9 +84,9 @@ cc_library(
         ":ridge-loss",
         ":optimizer",
         ":line-search",
-        "//external:eigen",
-        "//external:glog",
-        "//external:gtest",
+        "//third_party/eigen",
+        "//third_party/glog",
+        "//third_party/gtest",
     ],
     visibility = ["//visibility:public"],
 )
@@ -96,9 +96,9 @@ cc_test(
     srcs = ["stochastic-gradient-descent_test.cc"],
     deps = [
         ":stochastic-gradient-descent",
-        "//external:eigen",
-        "//external:glog",
-        "//external:gtest_main",
+        "//third_party/eigen",
+        "//third_party/glog",
+        "//third_party/gtest:gtest_main",
     ],
     size = "small",
 )
@@ -110,9 +110,9 @@ cc_library(
     deps = [
         ":loss-function",
         ":optimizer_proto",
-        "//external:eigen",
-        "//external:glog",
-        "//external:gtest",
+        "//third_party/eigen",
+        "//third_party/glog",
+        "//third_party/gtest",
     ],
     visibility = ["//visibility:public"],
 )
@@ -122,9 +122,9 @@ cc_test(
     srcs = ["ridge-loss_test.cc"],
     deps = [
         ":ridge-loss",
-        "//external:eigen",
-        "//external:glog",
-        "//external:gtest_main",
+        "//third_party/eigen",
+        "//third_party/glog",
+        "//third_party/gtest:gtest_main",
     ],
     size = "small",
 )
@@ -135,9 +135,9 @@ cc_library(
     hdrs = ["squared-loss.h"],
     deps = [
         ":loss-function",
-        "//external:eigen",
-        "//external:glog",
-        "//external:gtest",
+        "//third_party/eigen",
+        "//third_party/glog",
+        "//third_party/gtest",
     ],
     visibility = ["//visibility:public"],
 )
@@ -147,9 +147,9 @@ cc_test(
     srcs = ["squared-loss_test.cc"],
     deps = [
         ":squared-loss",
-        "//external:glog",
-        "//external:eigen",
-        "//external:gtest_main",
+        "//third_party/glog",
+        "//third_party/eigen",
+        "//third_party/gtest:gtest_main",
     ],
     size = "small",
 )
@@ -160,6 +160,6 @@ cc_library(
     hdrs = ["line-search.h"],
     deps = [
         ":loss-function",
-        "//external:eigen",
+        "//third_party/eigen",
     ],
 )

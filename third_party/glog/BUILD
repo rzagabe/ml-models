@@ -18,7 +18,7 @@ cc_library(
         "build/src",
     ],
     deps = [
-        '//external:gflags'
+        '//third_party/gflags',
     ],
     linkopts = ["-lpthread"],
 )

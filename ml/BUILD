@@ -5,9 +5,9 @@ cc_library(
     srcs = ["factory.cc"],
     hdrs = ["factory.h"],
     deps = [
-        "//external:glog",
-        "//external:proto_lib",
-        "//external:gtest",
+        "//third_party/glog",
+        "//third_party/protobuf:proto_lib",
+        "//third_party/gtest",
     ],
     visibility = ["//visibility:public"],
 )
@@ -25,9 +25,9 @@ cc_library(
         ":factory",
         ":model_proto",
         "//ml/data",
-        "//external:proto_lib",
-        "//external:glog",
-        "//external:gtest",
+        "//third_party/protobuf:proto_lib",
+        "//third_party/glog",
+        "//third_party/gtest",
     ],
 )
 
@@ -60,7 +60,7 @@ cc_library(
         ":factory",
         "//ml/data",
         "//ml/optimizer:optimizers",
-        "//external:eigen",
+        "//third_party/eigen",
     ],
 )
 
@@ -69,10 +69,10 @@ cc_test(
     srcs = ["linear-regression_test.cc"],
     deps = [
         ":linear-regression",
-        "//external:glog",
-        "//external:gtest_main",
-        "//external:proto_lib",
         "//ml/data:ml-data",
+        "//third_party/glog",
+        "//third_party/gtest:gtest_main",
+        "//third_party/protobuf:proto_lib",
     ],
     size = "small",
 )
@@ -92,10 +92,10 @@ cc_library(
     deps = [
         ":model",
         ":ridge-regression_proto",
-        "//external:eigen",
-        "//external:glog",
-        "//external:gtest",
         "//ml/data:ml-data",
+        "//third_party/eigen",
+        "//third_party/glog",
+        "//third_party/gtest",
     ],
     visibility = ["//visibility:public"],
 )
@@ -105,10 +105,10 @@ cc_test(
     srcs = ["ridge-regression_test.cc"],
     deps = [
         ":ridge-regression",
-        "//external:proto_lib",
-        "//external:glog",
-        "//external:gtest_main",
         "//ml/data:ml-data",
+        "//third_party/protobuf:proto_lib",
+        "//third_party/glog",
+        "//third_party/gtest:gtest_main",
     ],
     size = "small",
     data = [
