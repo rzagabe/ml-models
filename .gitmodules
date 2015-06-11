@@ -1,3 +1,6 @@
 [submodule "third_party/glog/repository"]
 	path = third_party/glog/repository
 	url = git@github.com:google/glog.git
+[submodule "third_party/gflags/repository"]
+	path = third_party/gflags/repository
+	url = git@github.com:gflags/gflags.git
