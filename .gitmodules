@@ -10,3 +10,6 @@
 [submodule "third_party/protobuf/repository"]
 	path = third_party/protobuf/repository
 	url = git@github.com:google/protobuf.git
+[submodule "third_party/gtest/repository"]
+	path = third_party/gtest/repository
+	url = git@github.com:rzagabe/googletest.git
