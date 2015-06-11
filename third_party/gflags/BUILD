@@ -9,10 +9,18 @@ cc_library(
         "repository/src/gflags_reporting.cc",
         "repository/src/gflags_completions.cc",
     ],
+    hdrs = [
+        "build/include/gflags/config.h",
+        "build/include/gflags/gflags_completions.h",
+        "build/include/gflags/gflags_declare.h",
+        "build/include/gflags/gflags_gflags.h",
+        "build/include/gflags/gflags.h",
+    ],
+    copts = [
+        "-Ithird_party/gflags/build/include/gflags",
+    ],
     includes = [ 
-        "repository/src",
-        "repository/include",
-        "repository/include/gflags",
+        "build/include",
     ],
     linkopts = ["-lpthread"],
 )
