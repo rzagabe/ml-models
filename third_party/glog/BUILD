@@ -15,6 +15,7 @@ cc_library(
     ],
     includes = [
         "repository/src",
+        "build/src",
     ],
     deps = [
         '//external:gflags'
