@@ -4,3 +4,6 @@
 [submodule "third_party/gflags/repository"]
 	path = third_party/gflags/repository
 	url = git@github.com:gflags/gflags.git
+[submodule "third_party/eigen/repository"]
+	path = third_party/eigen/repository
+	url = git@github.com:RLovelett/eigen.git
