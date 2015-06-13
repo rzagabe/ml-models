@@ -14,9 +14,7 @@ namespace ml {
 
 REGISTER_FACTORY(Model)
 
-bool Model::Initialize(const ::google::protobuf::Message& message) {
-  const ModelParameters& parameters =
-      dynamic_cast<const ModelParameters&>(message);
+bool Model::Initialize(const ModelParameters& parameters) {
   name_ = parameters.name();
   type_ = parameters.type();
   return true;

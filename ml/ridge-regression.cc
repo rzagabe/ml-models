@@ -17,9 +17,7 @@ namespace ml {
 
 REGISTER_MODEL(RidgeRegression)
 
-bool RidgeRegression::Initialize(const ::google::protobuf::Message& message) {
-  const ModelParameters& parameters =
-      dynamic_cast<const ModelParameters&>(message);
+bool RidgeRegression::Initialize(const ModelParameters& parameters) {
   return ParseFromProto(parameters);
 }
 

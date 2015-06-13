@@ -22,10 +22,6 @@ class Creator {
 class FactoryBase {
  public:
   virtual ~FactoryBase() {}
-
-  virtual bool Initialize(const ::google::protobuf::Message& message) {
-    return true;
-  }
 };
 
 template <typename T>
@@ -45,15 +41,6 @@ class Factory {
     CHECK(creators_->find(name) != creators_->end()) << "Creator not found";
     T* instance = (*creators_)[name]->New();
     CHECK(instance != nullptr);
-    return instance;
-  }
-
-  static T* CreateOrDie(const std::string& name,
-                        const google::protobuf::Message& message) {
-    CHECK(creators_->find(name) != creators_->end()) << "Creator not found";
-    T* instance = (*creators_)[name]->New();
-    CHECK(instance != nullptr);
-    CHECK(instance->Initialize(message)) << "Instance initialization failed";
     return instance;
   }
 

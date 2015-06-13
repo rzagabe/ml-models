@@ -33,17 +33,16 @@ class StochasticGradientDescent : public Optimizer {
 
   virtual ~StochasticGradientDescent() { delete loss_; }
 
-  virtual bool Initialize(const ::google::protobuf::Message& message) {
-    const OptimizationParameters& options =
-        dynamic_cast<const OptimizationParameters&>(message);
-    const std::string& loss_name = options.loss_parameters().name();
-    const LossParameters& loss_parameters = options.loss_parameters();
+  virtual bool Initialize(const OptimizationParameters& parameters) {
+    const std::string& loss_name = parameters.loss_parameters().name();
+    const LossParameters& loss_parameters = parameters.loss_parameters();
     delete loss_;
-    loss_ = Factory<LossFunction>::CreateOrDie(loss_name, loss_parameters);
-    batch_size_ = options.batch_size();
-    bt_line_search_ = options.bt_line_search();
-    bt_line_search_alpha_ = options.bt_line_search_alpha();
-    bt_line_search_beta_ = options.bt_line_search_beta();
+    loss_ = Factory<LossFunction>::CreateOrDie(loss_name);
+    if (!loss_->Initialize(loss_parameters)) return false;
+    batch_size_ = parameters.batch_size();
+    bt_line_search_ = parameters.bt_line_search();
+    bt_line_search_alpha_ = parameters.bt_line_search_alpha();
+    bt_line_search_beta_ = parameters.bt_line_search_beta();
     return true;
   }
 

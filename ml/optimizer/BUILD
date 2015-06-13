@@ -24,6 +24,7 @@ cc_library(
     srcs = ["loss-function.cc"],
     hdrs = ["loss-function.h"],
     deps = [
+        ":optimizer_proto",
         "//ml:factory",
         "//third_party/eigen",
     ],

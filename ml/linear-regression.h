@@ -43,7 +43,7 @@ class LinearRegression : public Model {
   virtual ~LinearRegression() {}
 
   // Initialize linear regression model.
-  virtual bool Initialize(const ::google::protobuf::Message& message);
+  virtual bool Initialize(const ModelParameters& parameters);
 
   // Trains the model by minimizing the optimizer objective function.
   virtual bool Train(const data::Data& instances);

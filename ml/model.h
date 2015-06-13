@@ -29,7 +29,7 @@ class Model : public FactoryBase {
   virtual ~Model() {}
 
   // Initializes the model.
-  virtual bool Initialize(const ::google::protobuf::Message& message);
+  virtual bool Initialize(const ModelParameters& parameters);
 
   // Fit the model with a given training set.
   virtual bool Train(const data::Data& instances) = 0;

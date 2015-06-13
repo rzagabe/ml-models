@@ -27,9 +27,8 @@ class RidgeLoss : public LossFunction {
 
   virtual ~RidgeLoss() {}
 
-  virtual bool Initialize(const ::google::protobuf::Message& message) {
-    const LossParameters& params = dynamic_cast<const LossParameters&>(message);
-    l2_reg_ = params.l2_regularization();
+  virtual bool Initialize(const LossParameters& parameters) {
+    l2_reg_ = parameters.l2_regularization();
     return true;
   }
 

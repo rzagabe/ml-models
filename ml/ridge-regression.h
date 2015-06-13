@@ -30,7 +30,7 @@ class RidgeRegression : public Model {
   virtual ~RidgeRegression() {}
 
   // Initiliaze ridge regression model.
-  virtual bool Initialize(const ::google::protobuf::Message& message);
+  virtual bool Initialize(const ModelParameters& parameters);
 
   // Trains the model by using SVD to approximate the coeficients.
   virtual bool Train(const data::Data& instances);

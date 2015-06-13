@@ -20,9 +20,7 @@ using ml::optimizer::Optimizer;
 
 REGISTER_MODEL(LinearRegression);
 
-bool LinearRegression::Initialize(const ::google::protobuf::Message& message) {
-  const ModelParameters& parameters =
-      dynamic_cast<const ModelParameters&>(message);
+bool LinearRegression::Initialize(const ModelParameters& parameters) {
   return ParseFromProto(parameters);
 }
 
@@ -42,9 +40,9 @@ bool LinearRegression::Train(const data::Data& instances) {
   }
 
   LOG(INFO) << w_;
-  const std::string& optimizer_name = optimization_parameters_.name();
-  std::unique_ptr<Optimizer> optimizer(Factory<Optimizer>::CreateOrDie(
-      optimizer_name, optimization_parameters_));
+  const std::string& name = optimization_parameters_.name();
+  std::unique_ptr<Optimizer> optimizer(Factory<Optimizer>::CreateOrDie(name));
+  if (!optimizer->Initialize(optimization_parameters_)) return false;
   if (!optimizer->Optimize(x, y, min_iter_, max_iter_, eps_, gamma_, &w_)) {
     LOG(ERROR) << "optimization failed";
     return false;

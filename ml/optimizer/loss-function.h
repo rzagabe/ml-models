@@ -10,6 +10,7 @@
 
 #include "Eigen/Core"
 #include "ml/factory.h"
+#include "ml/optimizer/optimizer.pb.h"
 
 namespace ml {
 namespace optimizer {
@@ -22,6 +23,8 @@ class LossFunction : public FactoryBase {
   LossFunction() {}
 
   virtual ~LossFunction() {}
+
+  virtual bool Initialize(const LossParameters& parameters) { return true; }
 
   virtual bool eval_f(const Matrix& x, const Vector& y, const Vector& w,
                       double* f) = 0;
