@@ -24,18 +24,13 @@ class LossFunction : public FactoryBase {
 
   virtual ~LossFunction() {}
 
-  virtual bool Initialize(const LossParameters& parameters) { return true; }
+  virtual bool Initialize() { return true; }
 
   virtual bool eval_f(const Matrix& x, const Vector& y, const Vector& w,
                       double* f) = 0;
 
-  virtual double eval_f(const Matrix& x, const Vector& y, const Vector& w) = 0;
-
   virtual bool eval_gradient_f(const Matrix& x, const Vector& y,
                                const Vector& w, Vector* gradient_f) = 0;
-
-  virtual Vector eval_gradient_f(const Matrix& x, const Vector& y,
-                                 const Vector& w) = 0;
 
   virtual bool intermediate_callback(const Matrix& x, const Vector& y,
                                      int cur_iter, int min_iter, int max_iter,

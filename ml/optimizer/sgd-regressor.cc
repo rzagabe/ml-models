@@ -1,34 +1,28 @@
 // Author: zagabe.lu@gmail.com (Lucien R. Zagabe)
 
-#include "ml/optimizer/stochastic-gradient-descent.h"
+#include "ml/optimizer/sgd-regressor.h"
 
 #include <iostream>
 #include <string>
 
+#include "Eigen/Core"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
-#include "ml/optimizer/optimizer.h"
-#include "ml/optimizer/line-search.h"
 
 namespace ml {
 namespace optimizer {
 
-// Register the modethod as specified in //ml/optimzer/optimizer.proto.
-REGISTER_OPTIMIZER(StochasticGradientDescent)
+REGISTER_OPTIMIZER(SGDRegressor)
 
-bool StochasticGradientDescent::Optimize(const Matrix& x, const Vector& y,
-                                         int min_iter, int max_iter, double eps,
-                                         double gamma, Vector* w) {
-  CHECK(loss_ != nullptr) << "No loss function initilized";
+bool SGDRegressor::Optimize(const Matrix& x, const Vector& y, int min_iter,
+                            int max_iter, double eps, double gamma, Vector* w) {
   CHECK(min_iter < max_iter) << "Unexpected iteration boundary";
 
   CHECK(batch_size_ > 0 && batch_size_ < x.rows())
       << "Unreasonable minibatch size: " << batch_size_;
   CHECK(w != nullptr);
   for (int k = 0; k < max_iter; ++k) {
-    double f_k = 0.0;
-    CHECK(loss_->eval_f(x, y, *w, &f_k))
-        << "Couldn't compute objective function...";
+    double f_k = eval_f(x, y, *w);
 
     int index_instance = (batch_size_ * k) % x.rows();
     int num_instances = batch_size_;
@@ -38,10 +32,9 @@ bool StochasticGradientDescent::Optimize(const Matrix& x, const Vector& y,
     }
 
     Vector grad_f_k;
-    CHECK(loss_->eval_gradient_f(
-        x.block(index_instance, 0, num_instances, x.cols()),
-        y.block(index_instance, 0, num_instances, y.cols()), *w, &grad_f_k))
-        << "Couldn't compute gradient...";
+    eval_gradient_f(x.block(index_instance, 0, num_instances, x.cols()),
+                    y.block(index_instance, 0, num_instances, y.cols()), *w,
+                    &grad_f_k);
 
     cached_iterations_ = k + 1;
     cached_cost_ = f_k;
@@ -54,15 +47,16 @@ bool StochasticGradientDescent::Optimize(const Matrix& x, const Vector& y,
       break;
     }
 
+    // Backtracking line search.
     if (bt_line_search_) {
-      gamma = linesearch::BacktrackingLineSearch(loss_, x, y, *w, f_k, grad_f_k,
-                                                 bt_line_search_alpha_,
-                                                 bt_line_search_beta_);
+      gamma = 1.0;
+      while (eval_f(x, y, *w - gamma * grad_f_k) >
+             f_k - bt_line_search_alpha_ * gamma * grad_f_k.dot(grad_f_k))
+        gamma = bt_line_search_beta_ * gamma;
+      VLOG(1) << "step size: " << gamma;
     }
 
     *w = *w - gamma * grad_f_k;
-    CHECK(loss_->intermediate_callback(x, y, k + 1, min_iter, max_iter, eps,
-                                       &gamma, w));
   }
 
   return true;

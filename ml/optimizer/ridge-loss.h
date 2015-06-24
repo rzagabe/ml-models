@@ -27,11 +27,6 @@ class RidgeLoss : public LossFunction {
 
   virtual ~RidgeLoss() {}
 
-  virtual bool Initialize(const LossParameters& parameters) {
-    l2_reg_ = parameters.l2_regularization();
-    return true;
-  }
-
   virtual bool eval_f(const Matrix& x, const Vector& y, const Vector& w,
                       double* f) {
     CHECK(f != nullptr);
@@ -40,21 +35,11 @@ class RidgeLoss : public LossFunction {
     return true;
   }
 
-  virtual double eval_f(const Matrix& x, const Vector& y, const Vector& w) {
-    Matrix tmp = (y - (x * w)).transpose() * (y - (x * w));
-    return (tmp.sum() / 2) + ((l2_reg_ / 2) * (w.dot(w)));
-  }
-
   virtual bool eval_gradient_f(const Matrix& x, const Vector& y,
                                const Vector& w, Vector* gradient_f) {
     CHECK(gradient_f != nullptr);
     *gradient_f = x.transpose() * ((x * w) - y) + (l2_reg_ * w);
     return true;
-  }
-
-  virtual Vector eval_gradient_f(const Matrix& x, const Vector& y,
-                                 const Vector& w) {
-    return x.transpose() * ((x * w) - y) + (l2_reg_ * w);
   }
 
   virtual bool intermediate_callback(const Matrix& x, const Vector& y,

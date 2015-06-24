@@ -8,15 +8,23 @@ proto_library(
 cc_library(
     name = "optimizers",
     deps = [
-        ":loss-function",
-        ":squared-loss",
-        ":ridge-loss",
         ":optimizer",
         ":optimizer_proto",
-        ":gradient-descent",
-        ":stochastic-gradient-descent",
+        ":sgd-regressor",
     ],
     visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "optimizer",
+    srcs = ["optimizer.cc"],
+    hdrs = ["optimizer.h"],
+    deps = [
+        ":optimizer_proto",
+        "//ml:factory",
+        "//third_party/eigen",
+        "//third_party/glog",
+    ],
 )
 
 cc_library(
@@ -32,28 +40,12 @@ cc_library(
 )
 
 cc_library(
-    name = "optimizer",
-    srcs = ["optimizer.cc"],
-    hdrs = ["optimizer.h"],
+    name = "gd-regressor",
+    srcs = ["gd-regressor.cc"],
+    hdrs = ["gd-regressor.h"],
     deps = [
-        ":loss-function",
-        ":optimizer_proto",
-        "//ml:factory",
-        "//third_party/glog",
-        "//third_party/eigen",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-cc_library(
-    name = "gradient-descent",
-    srcs = ["gradient-descent.cc"],
-    hdrs = ["gradient-descent.h"],
-    deps = [
-        ":loss-function",
         ":optimizer",
-        ":squared-loss",
-        ":line-search",
+        ":optimizer_proto",
         "//third_party/eigen",
         "//third_party/glog",
         "//third_party/gtest",
@@ -62,13 +54,10 @@ cc_library(
 )
 
 cc_test(
-    name = "gradient-descent_test",
-    srcs = ["gradient-descent_test.cc"],
+    name = "gd-regressor_test",
+    srcs = ["gd-regressor_test.cc"],
     deps = [
-        ":optimizer",
-        ":optimizer_proto",
-        ":gradient-descent",
-        "//ml:factory",
+        ":gd-regressor",
         "//third_party/glog",
         "//third_party/protobuf:proto_lib",
         "//third_party/gtest:gtest_main",
@@ -77,14 +66,12 @@ cc_test(
 )
 
 cc_library(
-    name = "stochastic-gradient-descent",
-    srcs = ["stochastic-gradient-descent.cc"],
-    hdrs = ["stochastic-gradient-descent.h"],
+    name = "sgd-regressor",
+    srcs = ["sgd-regressor.cc"],
+    hdrs = ["sgd-regressor.h"],
     deps = [
-        ":squared-loss",
-        ":ridge-loss",
         ":optimizer",
-        ":line-search",
+        ":optimizer_proto",
         "//third_party/eigen",
         "//third_party/glog",
         "//third_party/gtest",
@@ -93,10 +80,10 @@ cc_library(
 )
 
 cc_test(
-    name = "stochastic-gradient-descent_test",
-    srcs = ["stochastic-gradient-descent_test.cc"],
+    name = "sgd-regressor_test",
+    srcs = ["sgd-regressor_test.cc"],
     deps = [
-        ":stochastic-gradient-descent",
+        ":sgd-regressor",
         "//third_party/eigen",
         "//third_party/glog",
         "//third_party/gtest:gtest_main",
@@ -153,14 +140,4 @@ cc_test(
         "//third_party/gtest:gtest_main",
     ],
     size = "small",
-)
-
-cc_library(
-    name = "line-search",
-    srcs = ["line-search.cc"],
-    hdrs = ["line-search.h"],
-    deps = [
-        ":loss-function",
-        "//third_party/eigen",
-    ],
 )

@@ -2,48 +2,37 @@ syntax = "proto2";
 
 package ml.optimizer;
 
-// Information about loss functions and their hyperparameters.
-// Next id: 3
-message LossParameters {
-  // Identifier of the actual loss function to minimize.
-  // Supported loss functions:
-  //    - "SquaredLoss":
-  //    - "RidgeLoss":
-  //    - "LassoLoss":
-  //
-  optional string name = 1 [default = "SquaredLoss"];
+// This message defines a large part of the optimizers extra parameters.
+// Next id: 5
+message OptimizerParameters {
+  enum Method {
+    // First-order gradient descent method.
+    GRADIENT = 0;
 
-  // L1 regularization.
-  optional double l1_regularization = 2 [default = 0.0];
+    // BFGS algorithm.
+    BFGS = 1;
+
+    // Limited memory BFGS algorithm.
+    LBFGS = 2;
+  }
+
+  // Optimizer algorithm.
+  optional Method method = 1 [default = GRADIENT];
+  
+  // Stochastic gradient descent mini-batch size.
+  optional int64 batch_size = 2 [default = 1];
 
   // L2 regularization.
   optional double l2_regularization = 3 [default = 0.0];
-}
-
-// This message defines a large part of the optimizers extra parameters.
-// Next id: 5
-message OptimizationParameters {
-  // Identifier of the optimization method used to minimize the objective
-  // function. Supported methods:
-  //    - "GradientDescent":
-  //    - "StochasticGradientDescent":
-  //
-  optional string name = 1 [default = "GradientDescent"];
-
-  // Mini-batch size. (for stochastic methods only)
-  optional int64 batch_size = 2 [default = 1];
-
+  
   // If true, choose step sizes via backtracking line search.
-  optional bool bt_line_search = 3 [default = false];
+  optional bool bt_line_search = 4 [default = false];
 
   // Backtracking line search constant. (0 <= alpha <= 0.5)
-  optional double bt_line_search_alpha = 4 [default = 0.3];
+  optional double bt_line_search_alpha = 5 [default = 0.3];
 
   // Backtracking line search constant. (0 <= beta <= 1)
-  optional double bt_line_search_beta = 5 [default = 0.8];
-
-  // Loss function settings.
-  optional LossParameters loss_parameters = 6;
+  optional double bt_line_search_beta = 6 [default = 0.8];
 
   extensions 100 to max;
 }

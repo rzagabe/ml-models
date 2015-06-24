@@ -1,5 +1,4 @@
 // Author: zagabe.lu@gmail.com (Lucien R. Zagabe)
-//
 
 #ifndef ML_OPTIMIZER_OPTIMIZER_H_
 #define ML_OPTIMIZER_OPTIMIZER_H_
@@ -8,17 +7,15 @@
 
 #include <iostream>
 #include <string>
-#include <memory>
 
 #include "Eigen/Core"
 #include "glog/logging.h"
 #include "ml/factory.h"
-#include "ml/optimizer/loss-function.h"
 
 namespace ml {
 namespace optimizer {
 
-class Optimizer : public FactoryBase {
+class Optimizer {
  public:
   typedef Eigen::VectorXf Vector;
   typedef Eigen::MatrixXf Matrix;
@@ -30,14 +27,19 @@ class Optimizer : public FactoryBase {
 
   virtual ~Optimizer() {}
 
-  virtual bool Initialize(const OptimizationParameters& parameters) {
-    bt_line_search_ = parameters.bt_line_search();
-    bt_line_search_alpha_ = parameters.bt_line_search_alpha();
-    bt_line_search_beta_ = parameters.bt_line_search_beta();
+  virtual bool Initialize(const OptimizerParameters& parameters) {
+    return false;
   }
 
   virtual bool Optimize(const Matrix& x, const Vector& y, int min_iter,
-                        int max_iter, double eps, double gamma, Vector* w) = 0;
+                        int max_iter, double eps, double gamma, Vector* w) {
+    return false;
+  }
+
+  virtual bool Optimize(const Matrix& x, const Matrix& y, int min_iter,
+                        int max_iter, double eps, double gamma, Matrix* w) {
+    return false;
+  }
 
   bool bt_line_search() { return bt_line_search_; }
   void set_bt_line_search(bool bt_line_search) {

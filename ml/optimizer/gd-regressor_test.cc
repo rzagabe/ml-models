@@ -1,7 +1,6 @@
 // Author: zagabe.lu@gmail.com (Lucien R. Zagabe)
-//
 
-#include "ml/optimizer/gradient-descent.h"
+#include "ml/optimizer/gd-regressor.h"
 
 #include <iostream>
 #include <string>
@@ -10,12 +9,10 @@
 #include "Eigen/Core"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
-#include "ml/optimizer/squared-loss.h"
 
-using ml::optimizer::SquaredLoss;
-using ml::optimizer::GradientDescent;
+using ml::optimizer::GDRegressor;
 
-TEST(GradientDescent, Optimize) {
+TEST(GDRegressor, Optimize) {
   Eigen::MatrixXf x(12, 1);
   x << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 
@@ -25,14 +22,13 @@ TEST(GradientDescent, Optimize) {
   Eigen::VectorXf w(1);
   w << 1;
 
-  GradientDescent optimizer;
-  optimizer.set_loss(new SquaredLoss);
+  GDRegressor optimizer;
   optimizer.Optimize(x, y, 0, 100, 0.0001, 0.001, &w);
   EXPECT_LT(optimizer.cached_iterations(), 20);
   EXPECT_LT(optimizer.cached_cost(), 0.0001);
 }
 
-TEST(GradientDescent, BacktrackingLineSearchOptimization) {
+TEST(GDRegressor, BacktrackingLineSearchOptimization) {
   Eigen::MatrixXf x(12, 1);
   x << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 
@@ -42,8 +38,7 @@ TEST(GradientDescent, BacktrackingLineSearchOptimization) {
   Eigen::VectorXf w(1);
   w << 1;
 
-  GradientDescent optimizer;
-  optimizer.set_loss(new SquaredLoss);
+  GDRegressor optimizer;
   optimizer.set_bt_line_search(true);
   optimizer.set_bt_line_search_alpha(0.3);
   optimizer.set_bt_line_search_beta(0.8);

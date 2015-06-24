@@ -1,6 +1,6 @@
 // Author: zagabe.lu@gmail.com (Lucien R. Zagabe)
 
-#include "ml/optimizer/stochastic-gradient-descent.h"
+#include "ml/optimizer/sgd-regressor.h"
 
 #include <iostream>
 #include <string>
@@ -11,11 +11,11 @@
 #include "ml/optimizer/squared-loss.h"
 #include "ml/optimizer/ridge-loss.h"
 
-using ml::optimizer::StochasticGradientDescent;
+using ml::optimizer::SGDRegressor;
 using ml::optimizer::SquaredLoss;
 using ml::optimizer::RidgeLoss;
 
-TEST(StochasticGradientDescent, SquaredLossOptimization) {
+TEST(SGDRegressor, SquaredLossOptimization) {
   Eigen::MatrixXf x(12, 1);
   x << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 
@@ -25,14 +25,13 @@ TEST(StochasticGradientDescent, SquaredLossOptimization) {
   Eigen::VectorXf w(1);
   w(0, 0) = 4;
 
-  StochasticGradientDescent optimizer;
-  optimizer.set_loss(new SquaredLoss);
+  SGDRegressor optimizer;
   optimizer.Optimize(x, y, 0, 100, 0.0001, 0.001, &w);
 
   EXPECT_EQ(optimizer.cached_iterations(), 100);
 }
 
-TEST(StochasticGradientDescent, RidgeLossOptimization) {
+TEST(SGDRegressor, RidgeLossOptimization) {
   Eigen::MatrixXf x(12, 1);
   x << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 
@@ -42,14 +41,14 @@ TEST(StochasticGradientDescent, RidgeLossOptimization) {
   Eigen::VectorXf w(1);
   w(0, 0) = 4;
 
-  StochasticGradientDescent optimizer;
-  optimizer.set_loss(new RidgeLoss);
+  SGDRegressor optimizer;
+  optimizer.set_l2_reg(0.0001);
   optimizer.Optimize(x, y, 0, 100, 0.0001, 0.001, &w);
 
   EXPECT_EQ(optimizer.cached_iterations(), 100);
 }
 
-TEST(StochasticGradientDescent, SquaredLossMiniBatchOptimization) {
+TEST(SGDRegressor, SquaredLossMiniBatchOptimization) {
   Eigen::MatrixXf x(12, 1);
   x << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 
@@ -59,8 +58,7 @@ TEST(StochasticGradientDescent, SquaredLossMiniBatchOptimization) {
   Eigen::VectorXf w(1);
   w(0, 0) = 4;
 
-  StochasticGradientDescent optimizer;
-  optimizer.set_loss(new SquaredLoss);
+  SGDRegressor optimizer;
   optimizer.set_batch_size(4);
   optimizer.Optimize(x, y, 0, 100, 0.0001, 0.001, &w);
 
@@ -68,7 +66,7 @@ TEST(StochasticGradientDescent, SquaredLossMiniBatchOptimization) {
   EXPECT_LT(optimizer.cached_cost(), 0.0001);
 }
 
-TEST(StochasticGradientDescent, BacktrackingLineSearchOptimization) {
+TEST(SGDRegressor, BacktrackingLineSearchOptimization) {
   Eigen::MatrixXf x(12, 1);
   x << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 
@@ -78,8 +76,7 @@ TEST(StochasticGradientDescent, BacktrackingLineSearchOptimization) {
   Eigen::VectorXf w(1);
   w(0, 0) = 4;
 
-  StochasticGradientDescent optimizer;
-  optimizer.set_loss(new SquaredLoss);
+  SGDRegressor optimizer;
   optimizer.set_batch_size(4);
   optimizer.set_bt_line_search(true);
   optimizer.set_bt_line_search_alpha(0.3);
