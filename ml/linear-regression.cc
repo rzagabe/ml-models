@@ -40,9 +40,9 @@ bool LinearRegression::Train(const data::Data& instances) {
   }
 
   LOG(INFO) << w_;
-  const std::string& name = optimization_parameters_.name();
-  std::unique_ptr<Optimizer> optimizer(Factory<Optimizer>::CreateOrDie(name));
-  if (!optimizer->Initialize(optimization_parameters_)) return false;
+  std::unique_ptr<Optimizer> optimizer(
+      Factory<Optimizer>::CreateOrDie("SGDRegressor"));
+  if (!optimizer->Initialize(optimizer_parameters_)) return false;
   if (!optimizer->Optimize(x, y, min_iter_, max_iter_, eps_, gamma_, &w_)) {
     LOG(ERROR) << "optimization failed";
     return false;
@@ -82,7 +82,7 @@ bool LinearRegression::SerializeToString(string* output) const {
   options->set_min_iter(min_iter_);
   options->set_eps(eps_);
   options->set_gamma(gamma_);
-  (*options->mutable_optimization_parameters()) = optimization_parameters_;
+  (*options->mutable_optimizer_parameters()) = optimizer_parameters_;
   for (int i = 0; i < w_.rows(); ++i) {
     options->add_parameters(w_(i, 0));
   }
@@ -114,7 +114,7 @@ bool LinearRegression::ParseFromProto(const ModelParameters& parameters) {
   max_iter_ = options.max_iter();
   min_iter_ = options.min_iter();
   gamma_ = options.gamma();
-  optimization_parameters_ = options.optimization_parameters();
+  optimizer_parameters_ = options.optimizer_parameters();
   w_.resize(options.parameters_size());
   for (int i = 0; i < options.parameters_size(); ++i) {
     w_(i, 0) = options.parameters(i);

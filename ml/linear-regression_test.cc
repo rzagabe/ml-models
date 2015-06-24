@@ -25,11 +25,10 @@ const char kLinearRegressionSpec[] =
     "   min_iter: 0 "
     "   eps: 0.0001 "
     "   gamma: 0.001 "
-    "   optimization_parameters: { "
-    "           name: \"StochasticGradientDescent\" "
-    "           loss_parameters: {  "
-    "                   name: \"SquaredLoss\" "
-    "           } "
+    "   optimizer_parameters: { "
+    "           method: GRADIENT "
+    "           batch_size: 1 "
+    "           l2_regularization: 0.0 "
     "   } "
     "}";
 

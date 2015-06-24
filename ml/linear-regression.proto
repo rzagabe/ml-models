@@ -25,7 +25,7 @@ message LinearRegressionParameters {
   repeated double parameters = 8;
 
   // Optimization settings.
-  optional optimizer.OptimizationParameters optimization_parameters = 9;
+  optional optimizer.OptimizerParameters optimizer_parameters = 9;
 
   extend ModelParameters {
     optional LinearRegressionParameters options = 101;

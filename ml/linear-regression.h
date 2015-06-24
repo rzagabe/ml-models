@@ -100,7 +100,7 @@ class LinearRegression : public Model {
   double gamma_;
 
   // Optimization settings.
-  optimizer::OptimizationParameters optimization_parameters_;
+  optimizer::OptimizerParameters optimizer_parameters_;
 };
 
 }  // namespace ml
